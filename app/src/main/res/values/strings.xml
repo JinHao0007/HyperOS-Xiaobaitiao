@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Xiaobaitiao</string>
+    <!-- Settings Activity Title -->
+    <string name="title_activity_settings">Xiaobaitiao</string>
+
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="may_need_reboot">This Settings may need reboot to apply</string>
+    <string name="may_need_reboot_reboot_phone">This setting takes effect after rebooting the phone</string>
+    <string name="reboot">Reboot</string>
+    <string name="xposed_desc">Smooth Home Handle (Gesture Line) Animation for HyperOS @ Art_Chen</string>
+
+    <string name="unsupported_xposed_version">Unsupported Xposed detected! Please install and active LSPosed!</string>
+    <string name="activated">Activated</string>
+    <string name="deactivated">Deactivated</string>
+
+    <string name="home_handle_header">Home Handle</string>
+    <string name="chen_home_handle_anim_title">Enable Chen Gesture Line Animation</string>
+    <string name="chen_home_handle_anim_summary">Enable the smooth gesture line animation with Love by Art_Chen</string>
+    <string name="chen_home_handle_anim_turbo_mode_title">Use Boost Mode for Gesture Line Animation</string>
+    <string name="chen_home_handle_anim_turbo_mode_summary">Will let Gesture Line can be move outside the nav bar</string>
+    <string name="chen_home_handle_no_space_title">Immersion Gesture Bar</string>
+    <string name="chen_home_handle_no_space_summary">Will make navigation bar window has all inset mode</string>
+    <string name="home_handle_wa_no_space_not_hide_title">Workaround Home Handle Not Hidden</string>
+    <string name="chen_home_handle_blur_effect_title">Apply Mi Blur Effect on Home Handle</string>
+    <string name="home_handle_disable_move_event_title">Disable Home Handle Movement</string>
+    <string name="home_handle_anim_custom_title">Custom Home Handle Animation</string>
+    <string name="home_handle_auto_trans_alphaval_title">Auto Transparent Degree</string>
+    <string name="normal_state_title">Normal State</string>
+    <string name="pressed_state_title">Pressed State</string>
+    <string name="home_state_title">Home State</string>
+    <string name="home_handle_scale_x_title">Scale X</string>
+    <string name="home_handle_scale_y_title">Scale Y</string>
+    <string name="home_handle_anim_duration_alpha">Alpha/Blur Anim Duration</string>
+    <string name="home_handle_anim_duration_scale">Scale Anim Duration</string>
+    <string name="home_handle_anim_duration_xy">Zoom Anim Duration</string>
+    <string name="home_handle_offset_x_title">Offset X</string>
+    <string name="home_handle_offset_y_title">Offset Y</string>
+    <string name="home_handle_force_alpha_at_home_title">Force to use alpha anim at home</string>
+    <string name="home_handle_force_alpha_at_home_summary">Transparent Anim will adjust alpha and drop blur effect</string>
+
+    <string name="navbar_attach_header">Nav Bar Follows App</string>
+    <string name="chen_navbar_attach_to_app_title">Attach Navigation Bar to App During Transition</string>
+    <string name="chen_navbar_attach_to_app_summary">HyperOS 4 turned off the stock "attach navigation bar to app" switch, so the gesture line stops following your swipe inside apps. Enable this, make sure the module scope includes System Framework in LSPosed, then reboot the phone.</string>
+
+    <string name="about_module_header">Module Settings</string>
+    <string name="hide_app_icon_title">Hide Icon on Launcher</string>
+    <string name="backup">Backup Configs</string>
+    <string name="backup_failed">Backup Configs Failed!</string>
+    <string name="backup_success">Backup Configs Success!</string>
+    <string name="restore">Restore Configs</string>
+    <string name="restore_failed">Restore Configs Failed!</string>
+    <string name="restore_success">Restore Configs Success!</string>
+    <string name="main_settings">Main Settings</string>
+</resources>

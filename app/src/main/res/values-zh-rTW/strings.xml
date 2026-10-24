@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">小白條</string>
+
+    <string name="confirm">確定</string>
+    <string name="cancel">取消</string>
+    <string name="may_need_reboot">此設定可能需要重新啟動才能生效</string>
+    <string name="may_need_reboot_reboot_phone">此設定需要重新啟動手機後生效</string>
+    <string name="reboot">重啟</string>
+    <string name="xposed_desc">為 HyperOS 提供絲滑的小白條(手勢線)動畫 @ Art_Chen</string>
+
+    <string name="unsupported_xposed_version">檢測到不支援的Xposed版本! 請安裝LSPosed並啟用該模組!</string>
+    <string name="activated">模塊已啟用</string>
+    <string name="deactivated">模塊未啟用</string>
+
+    <string name="home_handle_header">小白條與手勢欄</string>
+    <string name="chen_home_handle_anim_title">動起來吧!俺的小白條!</string>
+    <string name="chen_home_handle_anim_summary">啟用俺的絲滑流暢的用愛驅動的手勢動畫</string>
+    <string name="chen_home_handle_anim_turbo_mode_title">小白條動畫增強模式</string>
+    <string name="chen_home_handle_anim_turbo_mode_summary">(實驗性！)小白條將可以延伸到導航欄外一定區域，並將增大手勢欄佔位區為導航欄高度的兩倍大小(可能引入佈局錯誤，慎用)</string>
+    <string name="chen_home_handle_no_space_title">沉浸式手勢欄</string>
+    <string name="chen_home_handle_no_space_summary">手勢欄將不再佔位(可能引入佈局錯誤，慎用)</string>
+    <string name="home_handle_wa_no_space_not_hide_title">手勢欄隱藏時隱藏小白條</string>
+    <string name="chen_home_handle_blur_effect_title">在小白條上應用模糊材質(需要開啟高級材質)</string>
+    <string name="home_handle_disable_move_event_title">禁用小白條跟手位移</string>
+    <string name="home_handle_anim_custom_title">自訂小白條動畫</string>
+    <string name="home_handle_auto_trans_alphaval_title">自動透明程度</string>
+    <string name="normal_state_title">默認時</string>
+    <string name="pressed_state_title">按下時</string>
+    <string name="home_state_title">在桌面時</string>
+    <string name="home_handle_scale_x_title">橫向縮放</string>
+    <string name="home_handle_scale_y_title">縱向縮放</string>
+    <string name="home_handle_anim_duration_alpha">透明或模糊動畫時長</string>
+    <string name="home_handle_anim_duration_scale">縮放動畫時長</string>
+    <string name="home_handle_anim_duration_xy">位移動畫時長</string>
+    <string name="home_handle_offset_x_title">X軸偏移</string>
+    <string name="home_handle_offset_y_title">Y軸偏移</string>
+    <string name="home_handle_force_alpha_at_home_title">在桌面時強制使用透明度調整</string>
+    <string name="home_handle_force_alpha_at_home_summary">透明動畫將調整透明度而不是模糊等級，並將移除模糊材質</string>
+
+    <string name="navbar_attach_header">小白條應用內跟手</string>
+    <string name="chen_navbar_attach_to_app_title">應用內上滑時小白條跟隨</string>
+    <string name="chen_navbar_attach_to_app_summary">HyperOS 4 官方關掉了「導覽列跟隨應用程式視窗」這個開關，所以應用程式裡上滑時小白條不再跟著走。打開後還要在 LSPosed 裡把本模組的作用域勾上「系統框架」，然後重新啟動手機才會生效。</string>
+
+    <string name="about_module_header">模組設定</string>
+    <string name="hide_app_icon_title">隱藏桌面圖示</string>
+    <string name="backup">備份配置</string>
+    <string name="backup_failed">備份配置失敗!</string>
+    <string name="backup_success">備份配置成功!</string>
+    <string name="restore">恢復配置</string>
+    <string name="restore_failed">恢復配置失敗!</string>
+    <string name="restore_success">恢復配置成功!</string>
+    <string name="main_settings">主要設定</string>
+</resources>

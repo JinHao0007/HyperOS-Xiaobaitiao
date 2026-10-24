@@ -1,0 +1,64 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:key="activate_status"
+        app:title="@string/activated"
+        app:singleLineTitle="true"
+        app:icon="@drawable/ic_round_check_circle"
+        app:enabled="false" />
+
+    <PreferenceCategory app:title="@string/home_handle_header" app:key="home_handle">
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="chen_home_handle_anim"
+            app:title="@string/chen_home_handle_anim_title"
+            app:summary="@string/chen_home_handle_anim_summary"/>
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="chen_home_handle_anim_turbo_mode"
+            app:dependency="chen_home_handle_anim"
+            app:title="@string/chen_home_handle_anim_turbo_mode_title"
+            app:summary="@string/chen_home_handle_anim_turbo_mode_summary"/>
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="chen_home_handle_no_space"
+            app:dependency="chen_home_handle_anim"
+            app:title="@string/chen_home_handle_no_space_title"
+            app:summary="@string/chen_home_handle_no_space_summary"/>
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="home_handle_wa_no_space_not_hide"
+            app:dependency="chen_home_handle_no_space"
+            app:title="@string/home_handle_wa_no_space_not_hide_title" />
+
+        <Preference
+            app:key="home_handle_anim_custom"
+            app:dependency="chen_home_handle_anim"
+            app:title="@string/home_handle_anim_custom_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="home_handle_disable_move_event"
+            app:dependency="chen_home_handle_anim"
+            app:title="@string/home_handle_disable_move_event_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/navbar_attach_header" app:key="navbar_attach">
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="chen_navbar_attach_to_app"
+            app:title="@string/chen_navbar_attach_to_app_title"
+            app:summary="@string/chen_navbar_attach_to_app_summary"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/about_module_header">
+        <rikka.material.preference.MaterialSwitchPreference
+            app:key="hide_app_icon"
+            app:title="@string/hide_app_icon_title" />
+        <Preference
+            app:key="backup_config"
+            app:title="@string/backup" />
+        <Preference
+            app:key="restore_config"
+            app:title="@string/restore" />
+    </PreferenceCategory>
+</PreferenceScreen>
