@@ -32,6 +32,15 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
 
+      # 仓库里的 Gradle 发行版地址指向腾讯镜像（国内本地构建快），
+      # 但 GitHub 的托管 runner 在境外，拉这个镜像很慢，所以在 CI 上换成官方地址。
+      - name: Use official Gradle distribution on CI
+        run: |
+          sed -i \
+            's#^distributionUrl=.*#distributionUrl=https\\://services.gradle.org/distributions/gradle-8.9-bin.zip#' \
+            gradle/wrapper/gradle-wrapper.properties
+          grep '^distributionUrl' gradle/wrapper/gradle-wrapper.properties
+
       # 是否配置了签名密钥。没有配置也照常构建，只是产出未签名的 APK。
       - name: Check signing secrets
         id: signing
@@ -52,7 +61,17 @@ jobs:
         run: echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.keystore"
 
       - name: Build release APK
-        run: ./gradlew assembleRelease --console=plain
+        run: |
+          set +e
+          ./gradlew assembleRelease --console=plain --stacktrace > build-ci.log 2>&1
+          code=$?
+          tail -n 120 build-ci.log
+          if [ "$code" -ne 0 ]; then
+            # 把失败原因压缩成一条 annotation，方便在 Actions 页面和 API 里直接看到
+            msg="$(tail -n 40 build-ci.log | tr -d '\r' | sed -e 's/%/%25/g' -e 's/\n/%0A/g' | tr '\n' '|' | sed -e 's/|/%0A/g')"
+            echo "::error title=Gradle build failed::${msg}"
+            exit "$code"
+          fi
 
       - name: Sign APK
         if: steps.signing.outputs.enabled == 'true'
