@@ -34,7 +34,7 @@ HyperOS 的独立「小白条 / 手势条」增强模块，从 [Art-Chen/MIUI-Ex
 
 ## 已知限制
 
-- 「小白条真正跟随手指」做不出来。OS 4 的桌面是 Flutter（`libapp.so` 里的 Dart 机器码）、手势服务是 Rust（`com.rust.hyper_launcher.recents.TouchInteractionService`），两者都是编译后的原生机器码，没有 ART 方法可供 Xposed 改写。模块能恢复的只有「导航栏跟随应用窗口」这一层，位移曲线与回弹节奏仍由系统决定
+- 应用中上划小白条不触发跟手动画。OS 4 的桌面是 Flutter（`libapp.so` 里的 Dart 机器码）、手势服务是 Rust（`com.rust.hyper_launcher.recents.TouchInteractionService`），两者都是编译后的原生机器码，没有 ART 方法可供 Xposed 改写。模块能恢复的只有「导航栏跟随应用窗口」这一层，位移曲线与回弹节奏仍由系统决定
 - 沉浸式手势栏开关在 OS 4 上无效（依赖窗口 Insets 回写，会触发 native 崩溃）
 
 完整的尝试记录与技术分析写在仓库 README 的「技术瓶颈」一节。
