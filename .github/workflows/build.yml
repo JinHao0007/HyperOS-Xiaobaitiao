@@ -65,11 +65,12 @@ jobs:
           set +e
           ./gradlew assembleRelease --console=plain --stacktrace > build-ci.log 2>&1
           code=$?
-          tail -n 120 build-ci.log
+          tail -n 80 build-ci.log
           if [ "$code" -ne 0 ]; then
-            # 把失败原因压缩成一条 annotation，方便在 Actions 页面和 API 里直接看到
-            msg="$(tail -n 40 build-ci.log | tr -d '\r' | sed -e 's/%/%25/g' -e 's/\n/%0A/g' | tr '\n' '|' | sed -e 's/|/%0A/g')"
-            echo "::error title=Gradle build failed::${msg}"
+            # 把失败原因压缩成 annotation，方便在 Actions 页面和 API 里直接看到
+            esc() { tr -d '\r' | sed -e 's/%/%25/g' | awk '{printf "%s%%0A", $0}'; }
+            echo "::error title=Gradle build failed (log head)::$(head -n 20 build-ci.log | esc)"
+            echo "::error title=Gradle build failed (cause)::$(awk '/FAILURE: Build failed/{f=1} f' build-ci.log | head -n 22 | esc)"
             exit "$code"
           fi
 
