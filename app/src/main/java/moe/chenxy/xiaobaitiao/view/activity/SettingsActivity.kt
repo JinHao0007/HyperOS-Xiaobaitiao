@@ -160,6 +160,11 @@ class SettingsActivity : AppCompatActivity() {
                 return@setOnPreferenceClickListener true
             }
 
+            findPreference<Preference>("about_author_github")?.intent =
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/JinHao0007"))
+            findPreference<Preference>("about_author_origin")?.intent =
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Art-Chen/MIUI-Extra"))
+
             if (!this::backupLauncher.isInitialized) {
                 backupLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri: Uri? ->
                     if (uri != null) {

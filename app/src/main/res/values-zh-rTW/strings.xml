@@ -50,4 +50,12 @@
     <string name="restore_failed">恢復配置失敗!</string>
     <string name="restore_success">恢復配置成功!</string>
     <string name="main_settings">主要設定</string>
+
+    <string name="about_author_header">關於作者</string>
+    <string name="about_author_github_title">作者 GitHub</string>
+    <string name="about_author_github_summary">JinHao0007 · 點擊開啟 GitHub 主頁</string>
+    <string name="about_author_origin_title">原專案 MIUI-Extra</string>
+    <string name="about_author_origin_summary">本模組的小白條部分移植自 Art_Chen 的 MIUI-Extra，並在其基礎上繼續適配 HyperOS。點擊開啟原專案。</string>
+    <string name="about_author_thanks_title">特別鳴謝</string>
+    <string name="about_author_thanks_summary">感謝 Art_Chen 開源 MIUI-Extra：本模組的小白條動畫與手勢邏輯均來自該專案。</string>
 </resources>

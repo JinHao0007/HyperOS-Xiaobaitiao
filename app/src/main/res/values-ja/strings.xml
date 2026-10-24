@@ -50,4 +50,12 @@
     <string name="restore_failed">Restore Configs Failed!</string>
     <string name="restore_success">Restore Configs Success!</string>
     <string name="main_settings">Main Settings</string>
+
+    <string name="about_author_header">作者について</string>
+    <string name="about_author_github_title">作者の GitHub</string>
+    <string name="about_author_github_summary">JinHao0007 · タップで GitHub を開く</string>
+    <string name="about_author_origin_title">オリジナルの MIUI-Extra</string>
+    <string name="about_author_origin_summary">このモジュールのナビゲーションバー機能は Art_Chen の MIUI-Extra から移植し、HyperOS 向けに継続して調整しています。タップでオリジナルを開きます。</string>
+    <string name="about_author_thanks_title">謝辞</string>
+    <string name="about_author_thanks_summary">MIUI-Extra を公開してくださった Art_Chen 氏に感謝します。本モジュールのアニメーションとジェスチャ処理は同プロジェクトに由来します。</string>
 </resources>

@@ -52,4 +52,12 @@
     <string name="restore_failed">Restore Configs Failed!</string>
     <string name="restore_success">Restore Configs Success!</string>
     <string name="main_settings">Main Settings</string>
+
+    <string name="about_author_header">About the Author</string>
+    <string name="about_author_github_title">Author on GitHub</string>
+    <string name="about_author_github_summary">JinHao0007 · tap to open the GitHub profile</string>
+    <string name="about_author_origin_title">Original Project: MIUI-Extra</string>
+    <string name="about_author_origin_summary">The home handle part of this module is ported from Art_Chen\'s MIUI-Extra and further adapted for HyperOS. Tap to open the original project.</string>
+    <string name="about_author_thanks_title">Credits</string>
+    <string name="about_author_thanks_summary">Thanks to Art_Chen for open-sourcing MIUI-Extra: the animation and gesture logic in this module come from that project.</string>
 </resources>
