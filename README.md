@@ -60,10 +60,79 @@ OS2 / OS3 / OS4 上运行。适配过程中确认的系统行为如下：
 
 - 应用内上划的跟手位移由桌面进程的 Rust 服务负责，模块只能恢复「导航栏跟随窗口」这一层，
   不能单独调节手指位移幅度或回弹曲线。
-- 自绘小白条（在应用之上盖一条自己的白条来模拟跟手）的方案做过验证并放弃：
-  手势期间系统会把真正的 `NavigationHandle` 置为 INVISIBLE，整条导航栏被挂到应用窗口上，
-  自绘还要重新处理取色、深色强度、与系统动画的时序，收益太小。
 - OS 4 上沉浸式手势栏开关无效（原因见上）。
+- 更多的技术细节与尝试记录见下一节。
+
+## 技术瓶颈：为什么做不出「小白条真正跟随手指」
+
+这一节把结论和过程都写清楚，免得后来的人（包括我自己）再走一遍弯路。
+
+### 先看 OS 4 的手势是怎么实现的
+
+HyperOS 4 把桌面的手势交互换了一套实现：
+
+- **桌面本体是 Flutter 应用**。`/system_ext/priv-app/MiuiHome/MiuiHome.apk` 里没有 `classes.dex`，
+  取而代之的是一个 28 MB 的 `lib/arm64-v8a/libapp.so` —— 这是 Dart 代码被 AOT 编译成的机器码。
+  换句话说，桌面的界面、图标的缩放/位移、转场效果，全部是编译好的原生机器码在跑。
+- **手势服务是 Rust 写的**。`dumpsys` 里能看到触摸交互由
+  `com.miui.home/com.rust.hyper_launcher.recents.TouchInteractionService` 接管，
+  包名里的 `rust` 已经说明了实现语言。它从系统的输入管道拿触摸事件、计算进度，
+  再通过 `SurfaceControl` 直接驱动图层（SurfaceFlinger 事务），不经过 Java 层的 View 动画。
+
+两者配合的结果：手势过程中的所有视觉（包括小白条的实时位移、缩放、回弹曲线）都由编译后的
+机器码直接决定，Java 层能插手的地方非常有限。
+
+### 为什么 Xposed 这类模块束手无策
+
+Xposed / LSPosed 的工作方式是**改写 ART 虚拟机里的 Java 方法**：找到目标方法在
+`ArtMethod` 里的入口，把它替换成我们自己的实现。它只能改「有 Java/Kotlin 方法」的代码。
+
+- Rust 编译出来的 `libxxx.so` 里没有 ART 方法，没有方法表，没有可替换的入口；
+- Flutter 的 Dart 代码同理，它跑在 Dart VM / AOT 运行时里，也不属于 ART。
+
+所以「用 Rust 重构之后能不能用 Rust 去 hook」这个想法不成立：语言不是关键，
+**有没有可被替换的 ART 方法**才是关键。理论上存在原生层 hook（inline hook，
+比如 Dobby / ShadowHook 这类工具，直接改机器码指令），但要满足一堆前提：
+函数符号没有被打包器剥掉、能稳定定位到函数地址、不同系统版本偏移一致、
+改错了就是整个桌面进程崩溃，而且就算 hook 上了，不知道内部逻辑也改不动它的算法。
+这条路风险极高、可维护性接近零，不适合做成公开发布的模块。
+
+### 尝试过、并且都失败的四条路
+
+1. **从 SystemUI 侧强改小白条的属性**（alpha / translationY / scaleY）。
+   OS 4 在应用内上划期间会把真正的 `NavigationHandle` 置为 `INVISIBLE`（实测日志
+   `vis=4`），并且导航栏整条被挂到应用窗口上，Java 侧写入的属性随后被系统事务覆盖。
+   改不动。
+
+2. **在 SystemUI 里监听手指事件**（`InputManagerGlobal.monitorGestureInput`，
+   以及 OS 4 之前的 `MiuiGestureMonitor` 指纹监听路径）。
+   只能拿到手势最开头的几条事件流，后续事件被桌面进程的手势服务拿走了；
+   实测手势结束时的进度值固定在 1.21 ≈ PRESSED，说明中间过程根本没流到我们这里。
+   OS 4 上旧路径还会直接崩掉输入管线。
+
+3. **在 system_server 里用 `InputFilter` 旁观全部触摸事件**。
+   这条确实能拿到完整的事件流（`IInputFilter` 代理 + `filterInputEvent` 转发），
+   也验证过可以全程驱动。但问题是：**看得到 ≠ 改得动**。
+   小白条的跟手位移是 Rust 服务通过 SurfaceFlinger 事务直接提交的，
+   Java 层拿不到那个句柄，也没法在中间插入自己的数值。
+   加上它还能顺带 hook `NavigationHandle.setAlpha` 作为进度信号，
+   结果与自己触发的动画形成自反馈，反而让小白条抽搐。
+   这条路最后整体删除了。
+
+4. **自己在屏幕上盖一条白条**（`WindowManager.addView` 浮窗，模拟跟手）。
+   实测手势期间系统会隐藏真正的 handle，自己画一条确实"看得见"，
+   但要复刻的东西太多：取色与深色强度跟随、与系统动画的时序对齐、
+   多个 display 与横屏的处理、和真实导航栏的层叠关系……
+   收益是一条已经在动的白条，成本却是一整套视觉系统，权衡后放弃。
+
+### 所以现在的方案是什么
+
+退而求其次，只做「官方本来就有、但被 HyperOS 4 关掉」的那一层：
+在 system_server 里把 `DisplayPolicy` 的
+`mShouldAttachNavBarToAppDuringTransition` 强制置为 true，
+让系统恢复「应用内上划时导航栏跟随应用窗口」的原厂行为。
+小白条会跟着应用一起走、回到桌面后重新出现，但它的位移曲线、缩放幅度、回弹节奏，
+仍然是桌面进程里那份 Rust + Flutter 实现的，模块改不了。
 
 ## 相对原项目 MIUI-Extra 的改动
 
